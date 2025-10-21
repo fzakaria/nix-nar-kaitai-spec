@@ -1,3 +1,5 @@
 result*
 .direnv
 generated
+nar-ls
+nix_nar.o

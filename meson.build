@@ -11,6 +11,6 @@ kaitai_runtime_dep = dependency('kaitai-struct-cpp-stl-runtime', required: true)
 
 # Find the Kaitai Struct compiler
 # This searches for 'ksc' in your system's PATH.
-ksc = find_program('ksc', required : true)
+ksc = find_program('ksc', required: true)
 
 subdir('src')

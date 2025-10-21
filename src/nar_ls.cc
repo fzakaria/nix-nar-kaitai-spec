@@ -8,7 +8,7 @@
 // Include the Kaitai Struct runtime and the generated parser.
 // This assumes the generated header is in a directory called 'generated'.
 #include <kaitai/kaitaistream.h>
-#include "nix_nar.h"
+#include "kaitai/nix_nar.h"
 
 // Forward declaration for the recursive listing function
 void list_node_contents(nix_nar_t::node_t* node, const std::string& prefix, bool recursive);

@@ -2,7 +2,6 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include <memory>
 #include <sstream>
 
 // Include the Kaitai Struct runtime and the generated parser.

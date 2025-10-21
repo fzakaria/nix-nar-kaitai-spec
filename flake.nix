@@ -56,7 +56,7 @@
                 description = "Kaitai Struct C++ STL Runtime Library";
                 homepage = "https://kaitai.io/";
                 license = licenses.mit;
-                maintainers = with maintainers; [fmzakari];
+                maintainers = with maintainers; [fzakaria];
               };
             });
           })

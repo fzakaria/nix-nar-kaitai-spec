@@ -1,0 +1,6 @@
+# nix-nar-kaitai-spec
+
+Kaitai Struct specification for the Nix Archive (.nar) format.
+
+## Why
+Having a declarative Kaitai spec makes inspection, tooling, and integration easier across languages. It's a great way to validate our own [Nix spec](https://nix.dev/manual/nix/2.32/protocols/nix-archive).

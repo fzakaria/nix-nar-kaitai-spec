@@ -29,7 +29,7 @@ types:
       - id: body
         type: str
         size: len_str
-        encoding: 'ascii'
+        encoding: 'ASCII'
       - id: padding
         size: (8 - (len_str % 8)) % 8
 
@@ -95,6 +95,10 @@ types:
       # After the 'contents' token, read the file data
       - id: file_data
         type: file_content
+    instances:
+      is_executable:
+        value: 'attributes[0].key.body == "executable"'
+        doc: "True if the file has the 'executable' attribute."
     types:
       reg_attribute:
         doc: "An attribute of the file, e.g., 'executable' or 'contents'."

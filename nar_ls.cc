@@ -101,7 +101,7 @@ void list_node_contents(nix_nar_t::node_t* node, const std::string& prefix, bool
     for (const auto& entry : *dir_body->entries()) {
         if (entry->is_terminator()) continue;
         
-        std::string entry_name = "entry_" + std::to_string(i++); // Placeholder name
+        std::string entry_name = entry->name()->body();
         std::string type_char;
         std::string extra_info;
 
@@ -181,7 +181,7 @@ int main(int argc, char* argv[]) {
         std::cout << "NAR file parsed successfully." << std::endl;
         std::cout << std::endl;
 
-        list_node_contents(nar.root_node(), "/", recursive);
+        list_node_contents(nar.root_node(), "", recursive);
 
     } catch (const std::exception& e) {
         std::cerr << "Error parsing NAR file: " << e.what() << std::endl;

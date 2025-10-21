@@ -29,7 +29,7 @@ types:
       - id: body
         type: str
         size: len_str
-        encoding: 'ASCII'
+        encoding: 'ascii'
       - id: padding
         size: (8 - (len_str % 8)) % 8
 
@@ -68,18 +68,38 @@ types:
       - id: entries
         type: dir_entry
         repeat: until
-        repeat-until: '_.is_terminator'
+        repeat-until: (_io.size - _io.pos) <= 17
     types:
       dir_entry:
         doc: "A single entry within a directory, or a terminator."
         seq:
           - id: kind
             type: padded_str
+            valid:
+              expr: _.body == 'entry' or _.body == ''
             doc: "Must be 'entry' (for a child node) or '' (for terminator)."
+          - id: open_paren
+            type: padded_str
+            valid:
+              expr: _.body == '('
+          - id: name_key
+            type: padded_str
+            valid:
+              expr: _.body == 'name'
+          - id: name
+            type: padded_str
+          - id: node_key
+            type: padded_str
+            valid:
+              expr: _.body == 'node'
           - id: node
             type: node
             if: 'kind.body == "entry"'
             doc: "The child node, present only if kind is 'entry'."
+          - id: close_paren
+            type: padded_str
+            valid:
+              expr: _.body == ')'
         instances:
           is_terminator:
             value: 'kind.body == ""'

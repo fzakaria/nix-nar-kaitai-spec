@@ -4,3 +4,4 @@ generated
 nar-ls
 nix_nar.o
 .cache
+build

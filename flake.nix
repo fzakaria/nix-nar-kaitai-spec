@@ -16,6 +16,49 @@
         inherit system;
         overlays = [
           (final: prev: {
+            json-cpp = prev.stdenv.mkDerivation (finalAttrs: {
+              pname = "json.cpp";
+              version = "0-unstable-2025-10-21";
+
+              src = prev.fetchFromGitHub {
+                owner = "fzakaria";
+                repo = "json.cpp";
+                rev = "f2306d5de0f8603797614f1cd6d8a3bd22e5b866";
+                sha256 = "sha256-qYPS8+q6DAI22f08wVCtIsfP+rIGBYnB43zm8UJ7lZ8=";
+              };
+
+              nativeBuildInputs = [
+                prev.cmake
+                prev.copyPkgconfigItems
+              ];
+
+              pkgconfigItems = [
+                (prev.makePkgconfigItem rec {
+                  name = "json.cpp";
+                  inherit (finalAttrs) version;
+                  cflags = ["-I${variables.includedir}"];
+                  libs = [
+                    "-L${variables.libdir}"
+                    "-ljson"
+                    "-ldouble-conversion"
+                  ];
+                  variables = rec {
+                    prefix = placeholder "out";
+                    includedir = "${prefix}/include";
+                    libdir = "${prefix}/lib";
+                  };
+                  inherit (finalAttrs.meta) description;
+                })
+              ];
+
+              meta = with prev.lib; {
+                description = "Kaitai Struct C++ STL Runtime Library";
+                homepage = "https://kaitai.io/";
+                license = licenses.mit;
+                maintainers = with maintainers; [fzakaria];
+              };
+            });
+
             kaitai-struct-cpp-stl-runtime = prev.stdenv.mkDerivation (finalAttrs: {
               pname = "kaitai-struct-cpp-stl-runtime";
               version = "0.11";
@@ -71,6 +114,8 @@
           pkgs.ninja
           pkgs.pkg-config
           pkgs.abseil-cpp
+          pkgs.json-cpp
+          pkgs.clang-tools
         ];
       };
     });

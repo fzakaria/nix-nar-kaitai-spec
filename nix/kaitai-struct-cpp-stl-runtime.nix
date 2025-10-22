@@ -35,7 +35,7 @@ stdenv.mkDerivation (finalAttrs: {
     (makePkgconfigItem rec {
       name = "kaitai-struct-cpp-stl-runtime";
       inherit (finalAttrs) version;
-      cflags = [ "-I${variables.includedir}" ];
+      cflags = ["-I${variables.includedir}"];
       libs = [
         "-L${variables.libdir}"
         "-lkaitai_struct_cpp_stl_runtime"
@@ -54,10 +54,10 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   meta = {
-    pkgConfigModules = [ "kaitai-struct-cpp-stl-runtime" ];
+    pkgConfigModules = ["kaitai-struct-cpp-stl-runtime"];
     description = "Kaitai Struct C++ STL Runtime Library";
     homepage = "https://github.com/kaitai-io/kaitai_struct_cpp_stl_runtime";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ fzakaria ];
+    maintainers = with lib.maintainers; [fzakaria];
   };
 })

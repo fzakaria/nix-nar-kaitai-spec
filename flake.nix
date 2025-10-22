@@ -24,11 +24,20 @@
         ];
       };
     in {
-      packages.nix-nar-kaitai-spec = pkgs.nix-nar-kaitai-spec;
+      formatter = pkgs.alejandra;
+
+      packages.default = pkgs.nix-nar-kaitai-spec;
+
+      apps.nar-ls = {
+        type = "app";
+        program = "${pkgs.nix-nar-kaitai-spec}/bin/nar-ls";
+      };
 
       devShells.default = pkgs.mkShell {
         inputsFrom = [
-          pkgs.nix-nar-kaitai-spec
+          (pkgs.nix-nar-kaitai-spec.overrideAttrs (old: {
+            nativeBuildInputs = pkgs.lib.remove pkgs.nix (old.nativeBuildInputs or []);
+          }))
         ];
       };
     });

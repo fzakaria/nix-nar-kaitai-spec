@@ -10,6 +10,7 @@
   json-cpp,
   clang-tools,
   jq,
+  nix,
 }: let
   fs = lib.fileset;
 in
@@ -39,5 +40,6 @@ in
       ninja
       clang-tools
       jq
+      nix
     ];
   }

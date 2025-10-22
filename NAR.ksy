@@ -145,10 +145,18 @@ types:
         seq:
           - id: len_contents
             type: u8
+          # I got this trick from the kaitai gitter
+          # on how to get the absolute position of something.
+          # https://matrix.to/#/!gxFYJoZuKcRouBfhlb:gitter.im/$f06uOlpq61a1TMnxcMaEH7dWnqdJiJHiRbYqVXiWipg?via=gitter.im&via=matrix.org&via=matrix.adawesome.tech
+          - size: 0
+            if: nar_offset < 0
           - id: contents
             size: len_contents
           - id: padding
             size: (8 - (len_contents % 8)) % 8
+        instances:
+          nar_offset:
+            value: _io.pos
 
   type_symlink:
     doc: "A symbolic link node."

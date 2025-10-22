@@ -4,6 +4,7 @@ bash = find_program('bash', native : true)
 
 tests = [
     'test_hello_world.sh',
+    'test_hello_world_executable.sh',
 ]
 
 find_program('nix', native : true)

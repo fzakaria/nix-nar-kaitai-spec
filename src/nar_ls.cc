@@ -54,6 +54,21 @@ absl::StatusOr<jt::Json> list_node_contents(nix_nar_t::node_t* node) {
         return status;
       }
       result["entries"][entry_name] = *status;
+    } else if (type == "regular") {
+      const auto regular_body =
+          static_cast<nix_nar_t::type_regular_t*>(entry->node()->body());
+      const auto file_data = regular_body->file_data();
+      
+      result["entries"][entry_name]["type"] = "regular";
+      result["entries"][entry_name]["size"] = file_data->len_contents();
+      // This is the offset of the contents of the file_data.
+      result["entries"][entry_name]["narOffset"] = file_data->nar_offset();
+
+      const auto is_executable = static_cast<nix_nar_t::type_regular_t*>(entry->node()->body())->is_executable();
+      if (is_executable) {
+        result["entries"][entry_name]["executable"] =
+            static_cast<nix_nar_t::type_regular_t*>(entry->node()->body())->is_executable();
+      }
     }
   }
 

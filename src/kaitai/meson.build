@@ -11,4 +11,7 @@ nar_kaitai_lib = library(
     dependencies: [kaitai_runtime_dep],
 )
 
-nar_kaitai_dep = declare_dependency(link_with: nar_kaitai_lib, sources: kaitai_generated_srcs[1])
+nar_kaitai_dep = declare_dependency(
+    link_with: nar_kaitai_lib,
+    sources: kaitai_generated_srcs[1],
+)

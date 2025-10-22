@@ -8,7 +8,8 @@
   pkg-config,
   abseil-cpp,
   json-cpp,
-  clang-tools
+  clang-tools,
+  jq,
 }: let
   fs = lib.fileset;
 in
@@ -37,5 +38,6 @@ in
       meson
       ninja
       clang-tools
+      jq
     ];
   }

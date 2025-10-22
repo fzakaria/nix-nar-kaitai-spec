@@ -23,3 +23,4 @@ absl_symbolize_dep = dependency('absl_symbolize')
 ksc = find_program('ksc', required: true)
 
 subdir('src')
+subdir('test')

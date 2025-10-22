@@ -1,6 +1,6 @@
 subdir('kaitai')
 
-executable(
+nar_ls = executable(
     'nar-ls',
     'nar_ls.cc',
     dependencies: [

@@ -16,4 +16,5 @@ executable(
         absl_strings_dep,
         json_cpp_dep,
     ],
+    install: true,
 )

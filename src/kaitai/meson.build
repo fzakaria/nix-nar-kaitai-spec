@@ -9,6 +9,7 @@ nar_kaitai_lib = library(
     'nix-nar-kaitai-lib',
     kaitai_generated_srcs,
     dependencies: [kaitai_runtime_dep],
+    install: true,
 )
 
 nar_kaitai_dep = declare_dependency(

@@ -16,106 +16,19 @@
         inherit system;
         overlays = [
           (final: prev: {
-            json-cpp = prev.stdenv.mkDerivation (finalAttrs: {
-              pname = "json.cpp";
-              version = "0-unstable-2025-10-21";
-
-              src = prev.fetchFromGitHub {
-                owner = "fzakaria";
-                repo = "json.cpp";
-                rev = "f2306d5de0f8603797614f1cd6d8a3bd22e5b866";
-                sha256 = "sha256-qYPS8+q6DAI22f08wVCtIsfP+rIGBYnB43zm8UJ7lZ8=";
-              };
-
-              nativeBuildInputs = [
-                prev.cmake
-                prev.copyPkgconfigItems
-              ];
-
-              pkgconfigItems = [
-                (prev.makePkgconfigItem rec {
-                  name = "json.cpp";
-                  inherit (finalAttrs) version;
-                  cflags = ["-I${variables.includedir}"];
-                  libs = [
-                    "-L${variables.libdir}"
-                    "-ljson"
-                    "-ldouble-conversion"
-                  ];
-                  variables = rec {
-                    prefix = placeholder "out";
-                    includedir = "${prefix}/include";
-                    libdir = "${prefix}/lib";
-                  };
-                  inherit (finalAttrs.meta) description;
-                })
-              ];
-
-              meta = with prev.lib; {
-                description = "Kaitai Struct C++ STL Runtime Library";
-                homepage = "https://kaitai.io/";
-                license = licenses.mit;
-                maintainers = with maintainers; [fzakaria];
-              };
-            });
-
-            kaitai-struct-cpp-stl-runtime = prev.stdenv.mkDerivation (finalAttrs: {
-              pname = "kaitai-struct-cpp-stl-runtime";
-              version = "0.11";
-
-              src = prev.fetchFromGitHub {
-                owner = "kaitai-io";
-                repo = "kaitai_struct_cpp_stl_runtime";
-                rev = "${finalAttrs.version}";
-                sha256 = "sha256-2glGPf08bkzvnkLpQIaG2qiy/yO+bZ14hjIaCKou2vU=";
-              };
-
-              nativeBuildInputs = [
-                prev.cmake
-                prev.gtest
-                prev.zlib.dev
-                prev.copyPkgconfigItems
-              ];
-
-              pkgconfigItems = [
-                (prev.makePkgconfigItem rec {
-                  name = "kaitai-struct-cpp-stl-runtime";
-                  inherit (finalAttrs) version;
-                  cflags = ["-I${variables.includedir}"];
-                  libs = [
-                    "-L${variables.libdir}"
-                    "-lkaitai_struct_cpp_stl_runtime"
-                  ];
-                  variables = rec {
-                    prefix = placeholder "out";
-                    includedir = "${prefix}/include";
-                    libdir = "${prefix}/lib";
-                  };
-                  inherit (finalAttrs.meta) description;
-                })
-              ];
-
-              meta = with prev.lib; {
-                description = "Kaitai Struct C++ STL Runtime Library";
-                homepage = "https://kaitai.io/";
-                license = licenses.mit;
-                maintainers = with maintainers; [fzakaria];
-              };
-            });
+            nix-nar-kaitai-spec = final.callPackage ./derivation.nix {};
+            json-cpp = final.callPackage ./nix/json-cpp.nix {};
+            # https://github.com/NixOS/nixpkgs/pull/454243
+            kaitai-struct-cpp-stl-runtime = final.callPackage ./nix/kaitai-struct-cpp-stl-runtime.nix {};
           })
         ];
       };
     in {
+      packages.nix-nar-kaitai-spec = pkgs.nix-nar-kaitai-spec;
+
       devShells.default = pkgs.mkShell {
-        packages = [
-          pkgs.kaitai-struct-compiler
-          pkgs.kaitai-struct-cpp-stl-runtime
-          pkgs.meson
-          pkgs.ninja
-          pkgs.pkg-config
-          pkgs.abseil-cpp
-          pkgs.json-cpp
-          pkgs.clang-tools
+        inputsFrom = [
+          pkgs.nix-nar-kaitai-spec
         ];
       };
     });

@@ -1,5 +1,7 @@
 # nix-nar-kaitai-spec
 
+[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+
 Kaitai Struct specification for the Nix Archive (.nar) format.
 
 ## Why

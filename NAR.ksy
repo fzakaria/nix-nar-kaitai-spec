@@ -29,7 +29,7 @@ types:
       - id: body
         type: str
         size: len_str
-        encoding: 'ASCII'
+        encoding: 'ascii'
       - id: padding
         size: (8 - (len_str % 8)) % 8
 
@@ -60,6 +60,7 @@ types:
         type: padded_str
         valid:
           expr: _.body == ')'
+        if: "type_val.body != 'directory'"
         doc: "Must be ')', a token ending the node definition."
 
   type_directory:
@@ -68,7 +69,7 @@ types:
       - id: entries
         type: dir_entry
         repeat: until
-        repeat-until: (_io.size - _io.pos) <= 17
+        repeat-until: _.kind.body == ')'
     types:
       dir_entry:
         doc: "A single entry within a directory, or a terminator."
@@ -76,22 +77,26 @@ types:
           - id: kind
             type: padded_str
             valid:
-              expr: _.body == 'entry' or _.body == ''
+              expr: _.body == 'entry' or _.body == ')'
             doc: "Must be 'entry' (for a child node) or '' (for terminator)."
           - id: open_paren
             type: padded_str
             valid:
               expr: _.body == '('
+            if: 'kind.body == "entry"'
           - id: name_key
             type: padded_str
             valid:
               expr: _.body == 'name'
+            if: 'kind.body == "entry"'
           - id: name
             type: padded_str
+            if: 'kind.body == "entry"'
           - id: node_key
             type: padded_str
             valid:
               expr: _.body == 'node'
+            if: 'kind.body == "entry"'
           - id: node
             type: node
             if: 'kind.body == "entry"'
@@ -100,9 +105,10 @@ types:
             type: padded_str
             valid:
               expr: _.body == ')'
+            if: 'kind.body == "entry"'
         instances:
           is_terminator:
-            value: 'kind.body == ""'
+            value: kind.body == ')'
 
   type_regular:
     doc: "A regular file node."

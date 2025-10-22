@@ -70,6 +70,7 @@
           pkgs.meson
           pkgs.ninja
           pkgs.pkg-config
+          pkgs.abseil-cpp
         ];
       };
     });

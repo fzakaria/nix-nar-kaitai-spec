@@ -9,6 +9,11 @@ project(
 
 kaitai_runtime_dep = dependency('kaitai-struct-cpp-stl-runtime', required: true)
 
+absl_flags_dep = dependency('absl_flags')
+absl_crash_dep = dependency('absl_failure_signal_handler')
+absl_symbolize_dep = dependency('absl_symbolize')
+absl_base_dep = dependency('absl_base')
+
 # Find the Kaitai Struct compiler
 # This searches for 'ksc' in your system's PATH.
 ksc = find_program('ksc', required: true)

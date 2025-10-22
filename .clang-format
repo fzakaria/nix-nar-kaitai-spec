@@ -1,1 +1,4 @@
 BasedOnStyle: Google
+
+SortIncludes: true
+ColumnLimit: 120

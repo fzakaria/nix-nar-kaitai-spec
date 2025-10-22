@@ -1,10 +1,3 @@
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <vector>
-
-// Include the Kaitai Struct runtime and the generated parser.
-// This assumes the generated header is in a directory called 'generated'.
 #include <absl/debugging/failure_signal_handler.h>
 #include <absl/debugging/stacktrace.h>
 #include <absl/debugging/symbolize.h>
@@ -19,6 +12,11 @@
 #include <json.h>
 #include <kaitai/kaitaistream.h>
 
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
+
 #include "kaitai/nix_nar.h"
 
 /**
@@ -31,8 +29,7 @@ absl::StatusOr<jt::Json> list_node_contents(nix_nar_t::node_t* node) {
   }
 
   if (node->type_val()->body() != "directory") {
-    return absl::InvalidArgumentError(
-        "Error: The specified path is not a directory.");
+    return absl::InvalidArgumentError("Error: The specified path is not a directory.");
   }
 
   jt::Json result = jt::Json();

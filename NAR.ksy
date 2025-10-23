@@ -147,6 +147,8 @@ types:
             type: u8
           # I got this trick from the kaitai gitter
           # on how to get the absolute position of something.
+          # This fully relies on the property of instances that they are lazily evaluated
+          # and cached (once you first invoke an instance, it gets evaluated, the value is cached and will not change).
           # https://matrix.to/#/!gxFYJoZuKcRouBfhlb:gitter.im/$f06uOlpq61a1TMnxcMaEH7dWnqdJiJHiRbYqVXiWipg?via=gitter.im&via=matrix.org&via=matrix.adawesome.tech
           - size: 0
             if: nar_offset < 0

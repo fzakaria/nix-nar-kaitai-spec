@@ -7,6 +7,7 @@ tests = [
     'test_hello_world_executable.sh',
     'test_nested_directories.sh',
     'test_nested_directories_executable.sh',
+    'test_empty_file.sh',
 ]
 
 find_program('nix', native : true)

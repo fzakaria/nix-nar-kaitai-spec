@@ -1,7 +1,5 @@
 #! /usr/bin/env bash
 
-# Test: pack a directory containing a single file
-# hello_world.txt with content "hello world"
 tmpdir="$(mktemp -d)"
 workdir="$tmpdir/hello_dir"
 

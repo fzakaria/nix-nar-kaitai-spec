@@ -4,8 +4,7 @@ tmpdir="$(mktemp -d)"
 workdir="$tmpdir/hello_dir"
 
 mkdir -p "$workdir"
-echo 'hello world' > "$workdir/hello_world.txt"
-chmod +x "$workdir/hello_world.txt"
+touch "$workdir/empty_file.txt"
 
 nar_file="$tmpdir/hello.nar"
 nix nar pack "$workdir" > "$nar_file"

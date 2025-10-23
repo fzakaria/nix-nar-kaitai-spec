@@ -31,6 +31,11 @@
       apps.nar-ls = {
         type = "app";
         program = "${pkgs.nix-nar-kaitai-spec}/bin/nar-ls";
+        meta = {
+          description = "List contents of Nix NAR files";
+          homepage = "https://github.com/fzakaria/nix-nar-kaitai-spec";
+        };
+          
       };
 
       devShells.default = pkgs.mkShell {

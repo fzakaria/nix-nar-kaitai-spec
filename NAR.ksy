@@ -164,6 +164,8 @@ types:
       - id: target_key
         type: padded_str
         doc: "Must be 'target'."
+        valid:
+          expr: _.body == 'target'
       - id: target_val
         type: padded_str
         doc: "The destination path of the symlink."

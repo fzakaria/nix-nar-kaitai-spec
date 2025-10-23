@@ -68,6 +68,12 @@ absl::StatusOr<jt::Json> list_node_contents(nix_nar_t::node_t* node) {
         result["entries"][entry_name]["executable"] =
             static_cast<nix_nar_t::type_regular_t*>(entry->node()->body())->is_executable();
       }
+    } else if (type == "symlink") {
+      const auto symlink_body = static_cast<nix_nar_t::type_symlink_t*>(entry->node()->body());
+      result["entries"][entry_name]["type"] = "symlink";
+      result["entries"][entry_name]["target"] = symlink_body->target_val()->body();
+    } else {
+      return absl::InvalidArgumentError(absl::StrCat("Error: Unknown entry type: ", type, " for entry: ", entry_name));
     }
   }
 
